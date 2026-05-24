@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,8 +19,10 @@ import com.methodiusdev.lispedu.navigation.Screen
 import com.methodiusdev.lispedu.ui.theme.LispEduTheme
 import com.methodiusdev.lispedu.ui.screens.MainMenuScreen
 import com.methodiusdev.lispedu.ui.screens.AboutScreen
+import com.methodiusdev.lispedu.ui.screens.LessonScreen
 import androidx.navigation.compose.composable
 import com.methodiusdev.lispedu.ui.screens.ConfigScreen
+import androidx.compose.material3.Surface
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,37 +30,53 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LispEduTheme {
-                val navController = rememberNavController()
-
-                NavHost(
-                    navController = navController,
-                    startDestination = Screen.MainMenu.route
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
                 ) {
-                    composable(route = Screen.MainMenu.route) {
-                        MainMenuScreen(
-                            onNavigateToAbout = {
-                                navController.navigate(Screen.About.route)
-                            },
-                            onNavigateToSettings = {
-                                navController.navigate(Screen.Settings.route)
-                            }
-                        )
-                    }
+                    val navController = rememberNavController()
 
-                    composable(route = Screen.About.route) {
-                        AboutScreen(
-                            onBackClick = {
-                                navController.popBackStack()
-                            }
-                        )
-                    }
+                    NavHost(
+                        navController = navController,
+                        startDestination = Screen.MainMenu.route
+                    ) {
+                        composable(route = Screen.MainMenu.route) {
+                            MainMenuScreen(
+                                onNavigateToAbout = {
+                                    navController.navigate(Screen.About.route)
+                                },
+                                onNavigateToSettings = {
+                                    navController.navigate(Screen.Settings.route)
+                                },
+                                onNavigateToLesson = {
+                                    navController.navigate(Screen.Lesson.route)
+                                }
+                            )
+                        }
 
-                    composable(route = Screen.Settings.route) {
-                        ConfigScreen(
-                            onBackClick = {
-                                navController.popBackStack()
-                            }
-                        )
+                        composable(route = Screen.About.route) {
+                            AboutScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+
+                        composable(route = Screen.Settings.route) {
+                            ConfigScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+
+                        composable(route = Screen.Lesson.route) {
+                            LessonScreen(
+                                onBackClick = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
                     }
                 }
             }
