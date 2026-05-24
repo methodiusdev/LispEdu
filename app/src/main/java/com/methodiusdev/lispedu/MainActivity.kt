@@ -11,7 +11,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
+import com.methodiusdev.lispedu.navigation.Screen
 import com.methodiusdev.lispedu.ui.theme.LispEduTheme
+import com.methodiusdev.lispedu.ui.screens.MainMenuScreen
+import com.methodiusdev.lispedu.ui.screens.AboutScreen
+import androidx.navigation.compose.composable
+import com.methodiusdev.lispedu.ui.screens.ConfigScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,29 +26,40 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             LispEduTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                val navController = rememberNavController()
+
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.MainMenu.route
+                ) {
+                    composable(route = Screen.MainMenu.route) {
+                        MainMenuScreen(
+                            onNavigateToAbout = {
+                                navController.navigate(Screen.About.route)
+                            },
+                            onNavigateToSettings = {
+                                navController.navigate(Screen.Settings.route)
+                            }
+                        )
+                    }
+
+                    composable(route = Screen.About.route) {
+                        AboutScreen(
+                            onBackClick = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    composable(route = Screen.Settings.route) {
+                        ConfigScreen(
+                            onBackClick = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    LispEduTheme {
-        Greeting("Android")
     }
 }
