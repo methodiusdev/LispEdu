@@ -5,7 +5,7 @@ object LispRepository {
         id = 1,
         title = "Lisp Syntax & REPL",
         content = "In Common Lisp, everything is built from s-expressions (symbolic expressions). S-expressions can be atoms or lists. A list is written as open parenthesis, elements separated by spaces, and a closed parenthesis. For example: (plus 2 3). The REPL (Read-Eval-Print-Loop) reads this expression, evaluates it, prints the result, and loops back.",
-        quizQuestion = listOf(
+        quizQuestions = listOf(
             QuizQuestion(
                 id = 101,
                 questionText = "What does the REPL stand for in Common Lisp?",

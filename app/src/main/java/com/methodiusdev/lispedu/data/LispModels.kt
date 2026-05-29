@@ -11,5 +11,5 @@ data class Lesson(
     val id: Int,
     val title: String,
     val content: String, // TODO: The content of lesson should not be just a string.
-    val quizQuestion: List<QuizQuestion>
+    val quizQuestions: List<QuizQuestion>
 )
