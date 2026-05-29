@@ -23,6 +23,9 @@ import com.methodiusdev.lispedu.ui.screens.LessonScreen
 import androidx.navigation.compose.composable
 import com.methodiusdev.lispedu.ui.screens.ConfigScreen
 import androidx.compose.material3.Surface
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.methodiusdev.lispedu.data.LispRepository
+import com.methodiusdev.lispedu.ui.viewmodel.LessonViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,9 +74,15 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(route = Screen.Lesson.route) {
+                            val lessonViewModel: LessonViewModel = viewModel()
                             LessonScreen(
+                                viewModel = lessonViewModel,
+                                lispRepository = LispRepository,
                                 onBackClick = {
                                     navController.popBackStack()
+                                },
+                                onBackToMenu = {
+                                    navController.navigate(Screen.MainMenu.route)
                                 }
                             )
                         }
